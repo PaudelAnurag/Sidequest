@@ -1,56 +1,35 @@
-# Welcome to your Expo app 👋
+# SideQuest — first 4 screens (Expo + TypeScript + expo-router)
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Flow: `/` onboarding → `/auth` → `/permissions` → `/verify-email`
 
-## Get started
-
-1. Install dependencies
-
-   ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **src/app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
+## Setup
 ```bash
-npm run reset-project
+npx create-expo-app@latest sidequest        # default template (TypeScript + expo-router)
+cd sidequest
+rm -rf app components                        # drop template screens
+# copy theme.ts, app/, components/ from this folder into the project root
+npx expo install @expo-google-fonts/inter expo-font expo-splash-screen expo-status-bar \
+  expo-location expo-camera expo-notifications expo-sensors \
+  @expo/vector-icons react-native-safe-area-context
+npx expo start
 ```
 
-This command will move the starter code to the **example** directory and create a blank **src/app** directory where you can start developing.
+## app.json plugins (permission strings)
+```json
+{
+  "expo": {
+    "plugins": [
+      "expo-router",
+      ["expo-location", { "locationWhenInUsePermission": "SideQuest uses your location to find quests near you." }],
+      ["expo-camera", { "cameraPermission": "SideQuest uses the camera to scan quest QR codes." }],
+      "expo-notifications"
+    ],
+    "ios": { "infoPlist": { "NSMotionUsageDescription": "SideQuest uses activity data to improve your journey." } }
+  }
+}
+```
+Note: push notifications on Android need a dev build, not Expo Go.
 
-### Other setup steps
-
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## TODO
+- Google / Apple OAuth in `app/auth.tsx`
+- Resend + verification-link handling in `app/verify-email.tsx`
