@@ -23,7 +23,7 @@
       "predictiveBackGestureEnabled": false,
       "config": {
         "googleMaps": {
-          "apiKey": "AIzaSyAbqRGixGyKd0vB1RGjrFeM_9XgovVY32k"
+          "apiKey": ""
         }
       },
       "permissions": [
@@ -31,8 +31,7 @@
         "android.permission.ACCESS_FINE_LOCATION",
         "android.permission.CAMERA",
         "android.permission.RECORD_AUDIO"
-      ],
-      "package": "com.anurag_2001.SideQuest"
+      ]
     },
     "web": {
       "output": "server",
