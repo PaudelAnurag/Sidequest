@@ -21,11 +21,17 @@ export default function Progress() {
   return (
     <Screen
       footer={
-        <Button
-          title="View Details"
-          variant="secondary"
-          onPress={() => router.back()}
-        />
+        <View style={{ gap: spacing.sm }}>
+          <Button
+            title="Scan QR code"
+            onPress={() => router.push(`/scan/${q.id}`)}
+          />
+          <Button
+            title="View Details"
+            variant="secondary"
+            onPress={() => router.back()}
+          />
+        </View>
       }
     >
       <Header title="In Progress" />

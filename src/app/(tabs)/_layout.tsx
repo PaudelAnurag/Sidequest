@@ -2,13 +2,6 @@ import { Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
 import { colors, font, fontSize } from "../../constants/theme";
 
-type Name = keyof typeof Ionicons.glyphMap;
-const icon =
-  (name: Name) =>
-  ({ color, size }: { color: string; size: number }) => (
-    <Ionicons name={name} color={color} size={size} />
-  );
-
 export default function TabsLayout() {
   return (
     <Tabs
@@ -25,19 +18,31 @@ export default function TabsLayout() {
     >
       <Tabs.Screen
         name="home"
-        options={{ title: "Home", tabBarIcon: icon("home") }}
+        options={{
+          title: "Home",
+          tabBarIcon: ({ color, size }) => <Ionicons name="home" color={color} size={size} />,
+        }}
       />
       <Tabs.Screen
         name="map"
-        options={{ title: "Map", tabBarIcon: icon("location-outline") }}
+        options={{
+          title: "Map",
+          tabBarIcon: ({ color, size }) => <Ionicons name="location-outline" color={color} size={size} />,
+        }}
       />
       <Tabs.Screen
         name="rewards"
-        options={{ title: "Rewards", tabBarIcon: icon("gift-outline") }}
+        options={{
+          title: "Rewards",
+          tabBarIcon: ({ color, size }) => <Ionicons name="gift-outline" color={color} size={size} />,
+        }}
       />
       <Tabs.Screen
         name="profile"
-        options={{ title: "Profile", tabBarIcon: icon("person-outline") }}
+        options={{
+          title: "Profile",
+          tabBarIcon: ({ color, size }) => <Ionicons name="person-outline" color={color} size={size} />,
+        }}
       />
     </Tabs>
   );

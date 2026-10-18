@@ -1,6 +1,6 @@
 # SideQuest — first 4 screens (Expo + TypeScript + expo-router)
 
-Flow: `/` onboarding → `/auth` → `/permissions` → `/verify-email` → `/home` (tabs) → `/quest/[id]` → `/progress/[id]`
+Flow: `/` onboarding → `/auth` → `/permissions` → `/verify-email` → `/home` (tabs) → `/quest/[id]` → `/progress/[id]` → `/scan/[id]` → `/verifying/[id]` → `/completed/[id]` → `/claim/[id]` → `/rewards`; `/profile` → `/activity`
 
 ## Setup
 ```bash
