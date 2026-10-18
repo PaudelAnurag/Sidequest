@@ -1,6 +1,6 @@
-import { Ionicons } from "@expo/vector-icons";
+import { AppleMaps, GoogleMaps } from "expo-maps";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { StyleSheet, View } from "react-native";
+import { Platform, StyleSheet, View } from "react-native";
 import { AppText } from "../../components/AppText";
 import { Button } from "../../components/Button";
 import { Header } from "../../components/Header";
@@ -9,7 +9,13 @@ import { colors, radius, spacing } from "../../constants/theme";
 import { getQuest } from "../../quests";
 
 const STEP = 2; // TODO: from backend / QR scan state
-const DOTS = Array.from({ length: 8 }, (_, i) => i / 8);
+// TODO: per-quest location from the API
+const LOCATION = { latitude: 27.765464500000004, longitude: 85.34308866666666 };
+const MAP = {
+  style: StyleSheet.absoluteFill,
+  cameraPosition: { coordinates: LOCATION, zoom: 17 },
+  markers: [{ id: "quest", coordinates: LOCATION }],
+};
 
 export default function Progress() {
   const router = useRouter();
@@ -36,24 +42,16 @@ export default function Progress() {
     >
       <Header title="In Progress" />
 
-      {/* TODO: swap for a real map (react-native-maps + expo-location) */}
       <View style={styles.map}>
-        {DOTS.map((t) => (
-          <View
-            key={t}
-            style={[
-              styles.dot,
-              { left: `${24 + 52 * t}%`, top: `${68 - 46 * t}%` },
-            ]}
-          />
-        ))}
-        <View style={styles.me} />
-        <Ionicons
-          name="location"
-          size={40}
-          color={colors.primary}
-          style={styles.pin}
-        />
+        {Platform.OS === "ios" ? (
+          <AppleMaps.View {...MAP} />
+        ) : Platform.OS === "android" ? (
+          <GoogleMaps.View {...MAP} />
+        ) : (
+          <AppText color={colors.textSecondary} align="center" style={styles.fallback}>
+            Map is only available on iOS and Android.
+          </AppText>
+        )}
       </View>
 
       <View style={styles.text}>
@@ -80,25 +78,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.border,
     overflow: "hidden",
   },
-  dot: {
-    position: "absolute",
-    width: spacing.sm,
-    height: spacing.sm,
-    borderRadius: radius.full,
-    backgroundColor: colors.primary,
-  },
-  me: {
-    position: "absolute",
-    left: "20%",
-    top: "68%",
-    width: spacing.lg,
-    height: spacing.lg,
-    borderRadius: radius.full,
-    backgroundColor: colors.primary,
-    borderWidth: 2,
-    borderColor: colors.surface,
-  },
-  pin: { position: "absolute", left: "72%", top: "10%" },
+  fallback: { marginTop: spacing.huge },
   text: { gap: spacing.sm },
   track: {
     height: spacing.sm,

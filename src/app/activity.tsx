@@ -1,7 +1,9 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
+import { useRouter } from 'expo-router';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { AppText } from '../components/AppText';
+import { Chips } from '../components/Chips';
 import { Header } from '../components/Header';
 import { Screen } from '../components/Screen';
 import { colors, radius, shadow, spacing } from '../constants/theme';
@@ -20,24 +22,7 @@ export default function ActivityHistory() {
     <Screen>
       <Header title="Activity History" />
 
-      <View style={styles.chips}>
-        {(Object.keys(FILTERS) as Filter[]).map((f) => {
-          const active = f === filter;
-          return (
-            <Pressable
-              key={f}
-              onPress={() => setFilter(f)}
-              accessibilityRole="button"
-              accessibilityState={{ selected: active }}
-              style={[styles.chip, active && styles.chipActive]}
-            >
-              <AppText variant="caption" color={active ? colors.surface : colors.textSecondary} style={styles.bold}>
-                {f}
-              </AppText>
-            </Pressable>
-          );
-        })}
-      </View>
+      <Chips options={Object.keys(FILTERS) as Filter[]} value={filter} onChange={setFilter} />
 
       {rows.length === 0 ? (
         <AppText color={colors.textSecondary} align="center">
@@ -64,8 +49,13 @@ export default function ActivityHistory() {
 }
 
 function Row({ item, first }: { item: Activity; first: boolean }) {
+  const router = useRouter();
   return (
-    <View style={[styles.row, !first && styles.divider]}>
+    <Pressable
+      style={[styles.row, !first && styles.divider]}
+      onPress={() => router.push(`/activity/${item.id}`)}
+      accessibilityRole="button"
+    >
       <View style={styles.tile}>
         <Ionicons name={item.icon} size={20} color={colors.primary} />
       </View>
@@ -86,23 +76,12 @@ function Row({ item, first }: { item: Activity; first: boolean }) {
           {item.status}
         </AppText>
       </View>
-    </View>
+    </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
   flex: { flex: 1 },
-  bold: { fontFamily: 'Inter_600SemiBold' },
-  chips: { flexDirection: 'row', gap: spacing.sm },
-  chip: {
-    paddingHorizontal: spacing.lg,
-    paddingVertical: spacing.sm,
-    borderRadius: radius.full,
-    backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.border,
-  },
-  chipActive: { backgroundColor: colors.primary, borderColor: colors.primary },
   group: { gap: spacing.sm },
   list: {
     paddingHorizontal: spacing.lg,

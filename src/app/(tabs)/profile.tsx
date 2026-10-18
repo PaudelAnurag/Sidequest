@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
+import { Href, useRouter } from 'expo-router';
 import { Pressable, Share, StyleSheet, View } from 'react-native';
 import { AppText } from '../../components/AppText';
 import { Screen } from '../../components/Screen';
@@ -12,12 +12,12 @@ const STATS = [
   { value: String(PROFILE.badges), label: 'Badges Earned' },
 ];
 
-const MENU: { icon: keyof typeof Ionicons.glyphMap; label: string; href?: '/activity' }[] = [
+const MENU: { icon: keyof typeof Ionicons.glyphMap; label: string; href?: Href }[] = [
   { icon: 'time-outline', label: 'Activity History', href: '/activity' },
-  { icon: 'location-outline', label: 'Saved Places' },
-  { icon: 'card-outline', label: 'Payment Methods' },
-  { icon: 'settings-outline', label: 'Settings' },
-  { icon: 'help-circle-outline', label: 'Help & Support' },
+  { icon: 'location-outline', label: 'Saved Places', href: '/saved-places' },
+  { icon: 'card-outline', label: 'Payment Methods', href: '/payment-methods' },
+  { icon: 'settings-outline', label: 'Settings', href: '/settings' },
+  { icon: 'help-circle-outline', label: 'Help & Support', href: '/help' },
 ];
 
 export default function Profile() {
