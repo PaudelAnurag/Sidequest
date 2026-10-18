@@ -8,7 +8,10 @@
     "scheme": "sidequest",
     "userInterfaceStyle": "automatic",
     "ios": {
-      "icon": "./assets/expo.icon"
+      "icon": "./assets/expo.icon",
+      "infoPlist": {
+        "NSMotionUsageDescription": "SideQuest uses activity data to improve your journey."
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -28,7 +31,7 @@
       [
         "expo-splash-screen",
         {
-          "backgroundColor": "#208AEF",
+          "backgroundColor": "#FAF9F5",
           "image": "./assets/images/splash-icon.png",
           "imageWidth": 76
         }
@@ -36,7 +39,20 @@
       "expo-font",
       "expo-image",
       "expo-status-bar",
-      "expo-web-browser"
+      "expo-web-browser",
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "SideQuest uses your location to find quests near you."
+        }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "SideQuest uses the camera to scan quest QR codes."
+        }
+      ],
+      "expo-notifications"
     ],
     "experiments": {
       "typedRoutes": true,
