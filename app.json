@@ -31,7 +31,8 @@
         "android.permission.ACCESS_FINE_LOCATION",
         "android.permission.CAMERA",
         "android.permission.RECORD_AUDIO"
-      ]
+      ],
+      "package": "com.anurag_2001.SideQuest"
     },
     "web": {
       "output": "server",
